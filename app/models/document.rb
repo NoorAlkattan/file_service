@@ -6,6 +6,5 @@ class Document < ApplicationRecord
    document = Document.find(id)
    document.key = key
    document.save!
-   #document.update_column(:file_processed)
   end
 end
