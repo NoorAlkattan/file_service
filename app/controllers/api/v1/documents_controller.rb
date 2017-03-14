@@ -15,7 +15,7 @@ class Api::V1::DocumentsController < ApplicationController
 	end
 
 	private
-    def document_params
-		params.require(:document).permit(:file)
-    end
- end
+  def document_params
+	  params.require(:document).permit(:file)
+  end
+end
