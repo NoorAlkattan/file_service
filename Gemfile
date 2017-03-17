@@ -10,7 +10,13 @@ gem 'puma', '~> 3.0'
 gem 'carrierwave'
 gem 'fog'
 gem 'figaro'
-
+gem "execjs"
+gem 'therubyracer', platforms: :ruby
+gem 'capistrano'
+gem 'capistrano-rails'
+gem 'capistrano-bundler'
+gem 'capistrano-rvm'
+gem 'ci_reporter'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
