@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170323015017) do
+ActiveRecord::Schema.define(version: 20170323145557) do
 
   create_table "client_buckets", force: :cascade do |t|
     t.integer  "client_id"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20170323015017) do
     t.string   "file"
     t.string   "original_file_name"
     t.string   "generated_file_name"
+    t.string   "checksum"
   end
 
 end
