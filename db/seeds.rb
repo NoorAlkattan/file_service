@@ -92,6 +92,6 @@ client_list = [[2,'The MENTOR Network'],
   [93,'Indiana University Health Plans'],
   [94,'MCS']]
 
-client_list.each do |client_id,client_name|
-  ClientBucket.where(client_id: "#{client_id}" , client_name: "#{client_name}").first_or_create
+client_list.each do |client_id,bucket_name|
+  ClientBucket.where(client_id: client_id , bucket_name: bucket_name).first_or_create
 end
