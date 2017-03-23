@@ -1,21 +1,25 @@
 include HelperMethods
 class Api::V1::DocumentsController < ApplicationController
 
-  def show
-    document = Document.find(params[:id])
-    if params[:checksum] == document.checksum
-      document_data = document.as_json(only: [:id, :file])
-      render json: document_data
-    else
-      render json: {errors: 'the information you provided dose not match any file'}, status: 422
-    end
-  end
 
+ def show
+  document = Document.find(params[:id])
+	 if params[:checksum] == document.checksum
+	 document_data = document.as_json(only: [:id, :file])
+	 render json: document_data
+ else
+	 render json: {errors: 'the information you provided dose not match any file'}, status: 422
+ end
+end
 
   def create
     begin
       document = Document.new(document_params)
       file_data = document_params['file'].open
+			document.original_file_name = File.basename(document.file_url)
+			o = [(0..9), ('A'..'Z')].map(&:to_a).flatten
+      string = (0...5).map { o[rand(o.length)] }.join
+			document.generated_file_name = string + document.original_file_name
       document.checksum = compute_digest(file_data)
       if document.save
         document_data = document.as_json(only: [:id, :checksum])
@@ -26,7 +30,9 @@ class Api::V1::DocumentsController < ApplicationController
     rescue Exception => e
       render json: e.message.inspect
     end
-  end
+	end
+
+
   private
   def document_params
     params.require(:document).permit(:file)
