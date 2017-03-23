@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310163411) do
+ActiveRecord::Schema.define(version: 20170323002303) do
+
+  create_table "client_buckets", force: :cascade do |t|
+    t.integer  "client_id"
+    t.string   "bucket_name"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["client_id"], name: "index_client_buckets_on_client_id", unique: true
+  end
 
   create_table "documents", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "original_file_name"
+    t.string   "generated_file_name"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.string   "file"
   end
 
