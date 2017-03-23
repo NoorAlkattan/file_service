@@ -1,0 +1,2 @@
+class ClientBucket < ApplicationRecord
+end
