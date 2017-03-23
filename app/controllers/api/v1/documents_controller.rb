@@ -1,4 +1,4 @@
-include ChecksumHelper
+include HelperMethods
 class Api::V1::DocumentsController < ApplicationController
   
 	def show
