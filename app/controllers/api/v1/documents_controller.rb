@@ -1,5 +1,6 @@
+include ChecksumHelper
 class Api::V1::DocumentsController < ApplicationController
-
+  
 	def show
 		@document = Document.find(params[:id])
 		render json: @document
@@ -8,6 +9,8 @@ class Api::V1::DocumentsController < ApplicationController
 	def create
 	  begin
       @document = Document.new(document_params)
+      file_data = document_params['file'].open
+      @document.checksum = compute_digest(file_data)
       if @document.save
         render json: @document
       else
