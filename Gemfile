@@ -18,7 +18,6 @@ gem 'capistrano-bundler'
 gem 'capistrano-rvm'
 gem 'ci_reporter'
 gem 'listen', '~> 3.0'
-gem 'active_model_serializers', '~> 0.10.5'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
