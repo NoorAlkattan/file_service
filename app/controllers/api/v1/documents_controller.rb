@@ -6,7 +6,7 @@ class Api::V1::DocumentsController < ApplicationController
     if params[:checksum] == @document.checksum
       render json: @document
     else
-      render json: {errors: "checksum is not the same"}, status: 422
+      render json: {errors: "the information you provided dose not match any file"}, status: 422
     end
   end
 
