@@ -6,12 +6,16 @@ class Api::V1::DocumentsController < ApplicationController
 	end
 
 	def create
-    @document = Document.new(document_params)
-    if @document.save
-      render json: @document
-    else
-      render json: @document.errors
-    end
+	  begin
+      @document = Document.new(document_params)
+      if @document.save
+        render json: @document
+      else
+        render json: @document.errors
+      end
+    rescue Exception => e
+      render json: e.message.inspect
+    end  
 	end
 
 	private
