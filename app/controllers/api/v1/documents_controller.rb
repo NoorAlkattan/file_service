@@ -1,25 +1,23 @@
 include HelperMethods
 class Api::V1::DocumentsController < ApplicationController
 
-
- def show
-  document = Document.find(params[:id])
-	 if params[:checksum] == document.checksum
-	 document_data = document.as_json(only: [:id, :file])
-	 render json: document_data
- else
-	 render json: {errors: 'the information you provided dose not match any file'}, status: 422
- end
-end
+  def show
+     document = Document.find(params[:id])
+     if params[:checksum] == document.checksum
+       document_data = document.as_json(only: [:id, :file])
+       render json: document_data
+     else
+       render json: {errors: 'the information you provided dose not match any file'}, status: 422
+     end
+  end
 
   def create
     begin
       document = Document.new(document_params)
+      bucket_name = ClientBucket.find_by_client_id(document.client_id).bucket_name
+      set_bucket_name(bucket_name)
       file_data = document_params['file'].open
 			document.original_file_name = File.basename(document.file_url)
-			o = [(0..9), ('A'..'Z')].map(&:to_a).flatten
-      string = (0...5).map { o[rand(o.length)] }.join
-			document.generated_file_name = string + document.original_file_name
       document.checksum = compute_digest(file_data)
       if document.save
         document_data = document.as_json(only: [:id, :checksum])
@@ -34,7 +32,14 @@ end
 
 
   private
+  
   def document_params
-    params.require(:document).permit(:file)
+    params.require(:document).permit(:file, :client_id)
+  end
+  
+  def set_bucket_name(name)
+    CarrierWave.configure do |config|
+      config.fog_directory = name
+    end
   end
 end
