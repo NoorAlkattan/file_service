@@ -19,6 +19,7 @@ class Api::V1::DocumentsController < ApplicationController
       file_data = document_params['file'].open
 			document.original_file_name = File.basename(document.file_url)
       document.checksum = compute_digest(file_data)
+      document.generated_file_name = generat_file_name(document.original_file_name)
       if document.save
         document_data = document.as_json(only: [:id, :checksum])
         render json: document_data
@@ -41,5 +42,11 @@ class Api::V1::DocumentsController < ApplicationController
     CarrierWave.configure do |config|
       config.fog_directory = name
     end
+  end
+  
+  def generat_file_name(file_name)
+    o = [(0..9), ('A'..'Z')].map(&:to_a).flatten
+    string = (0...5).map { o[rand(o.length)] }.join
+    return string + file_name
   end
 end

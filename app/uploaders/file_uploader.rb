@@ -43,12 +43,6 @@ class FileUploader < CarrierWave::Uploader::Base
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
-    generat_file_name(model.original_file_name)
-  end
-  
-  def generat_file_name(file_name)
-    o = [(0..9), ('A'..'Z')].map(&:to_a).flatten
-    string = (0...5).map { o[rand(o.length)] }.join
-    return string + file_name
+    model.generated_file_name
   end
 end
