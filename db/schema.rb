@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20170323145557) do
     t.string   "original_file_name"
     t.string   "generated_file_name"
     t.string   "checksum"
+    t.integer  "client_id"
   end
 
 end

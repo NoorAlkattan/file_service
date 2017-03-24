@@ -94,5 +94,5 @@
 
 
   client_list.each do |client_id,client_name|
-    ClientBucket.where(client_id: client_id , bucket_name: (client_id.to_s + '_lp_gb_bucket_' + client_id.to_s)).first_or_create
+    ClientBucket.where(client_id: client_id , bucket_name: (client_id.to_s + '-lp-gb-bucket-' + client_id.to_s)).first_or_create
   end
