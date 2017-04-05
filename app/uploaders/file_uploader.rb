@@ -43,6 +43,6 @@ class FileUploader < CarrierWave::Uploader::Base
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
-    model.generated_file_name
+    "#{ClientBucket.find_by_client_id(model.client_id).bucket_name}/#{model.generated_file_name}"
   end
 end

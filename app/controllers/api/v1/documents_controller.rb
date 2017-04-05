@@ -14,8 +14,7 @@ class Api::V1::DocumentsController < ApplicationController
   def create
     begin
       document = Document.new(document_params)
-      bucket_name = ClientBucket.find_by_client_id(document.client_id).bucket_name
-      set_bucket_name(bucket_name)
+      # bucket_name = ClientBucket.find_by_client_id(document.client_id).bucket_name      
       file_data = document_params['file'].open
 			document.original_file_name = File.basename(document.file_url)
       document.checksum = compute_digest(file_data)
@@ -38,11 +37,11 @@ class Api::V1::DocumentsController < ApplicationController
     params.require(:document).permit(:file, :client_id)
   end
 
-  def set_bucket_name(name)
-    CarrierWave.configure do |config|
-      config.fog_directory = name
-    end
-  end
+  # def set_bucket_name(name)
+  #   CarrierWave.configure do |config|
+  #     config.fog_directory = name
+  #   end
+  # end
 
   def generat_file_name(file_name)
     o = [(0..9), ('A'..'Z')].map(&:to_a).flatten
