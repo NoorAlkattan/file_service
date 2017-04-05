@@ -4,10 +4,10 @@ class Api::V1::DocumentsController < ApplicationController
   def show
      document = Document.find(params[:id])
      if params[:checksum] == document.checksum
-       document_data = document.as_json(only: [:id, :file])
+       document_data = document.as_json(only: [:id, :file, :original_file_name])
        render json: document_data
      else
-       render json: {errors: 'the information you provided dose not match any file'}, status: 422
+       render json: {errors: 'the information you provided does not match any file'}, status: 422
      end
   end
 
@@ -33,17 +33,17 @@ class Api::V1::DocumentsController < ApplicationController
 
 
   private
-  
+
   def document_params
     params.require(:document).permit(:file, :client_id)
   end
-  
+
   def set_bucket_name(name)
     CarrierWave.configure do |config|
       config.fog_directory = name
     end
   end
-  
+
   def generat_file_name(file_name)
     o = [(0..9), ('A'..'Z')].map(&:to_a).flatten
     string = (0...5).map { o[rand(o.length)] }.join
