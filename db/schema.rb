@@ -21,11 +21,10 @@ ActiveRecord::Schema.define(version: 20170323145557) do
   end
 
   create_table "documents", force: :cascade do |t|
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.string   "file"
     t.string   "original_file_name"
-    t.string   "generated_file_name"
     t.string   "checksum"
     t.integer  "client_id"
   end
