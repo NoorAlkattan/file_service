@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   		resources :documents
   	end
   end
+  
+  get 'db_seed', to: 'application#db_seed'
 end
