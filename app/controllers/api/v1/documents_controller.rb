@@ -14,7 +14,7 @@ class Api::V1::DocumentsController < ApplicationController
   def create
     begin
       document = Document.new(document_params)
-      # bucket_name = ClientBucket.find_by_client_id(document.client_id).bucket_name      
+      bucket_name = ClientBucket.where(client_id: document_params[:client_id] , bucket_name: (document_params[:client_id] + '-lp-client-bucket')).first_or_create
       file_data = document_params['file'].open
 			document.original_file_name = File.basename(document.file_url)
       document.checksum = compute_digest(file_data)

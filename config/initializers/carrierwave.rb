@@ -6,4 +6,5 @@ CarrierWave.configure do |config|
     region: ENV['region'],
   }
   config.fog_directory = ENV['fog_directory']
+  config.fog_attributes = {'x-amz-server-side-encryption' => 'AES256','Cache-Control'=>'max-age=315576000'}
 end
