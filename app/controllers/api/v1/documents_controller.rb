@@ -6,13 +6,15 @@ class Api::V1::DocumentsController < ApplicationController
      if params[:checksum] == document.checksum
        document_data = document.as_json(only: [:id, :file, :original_file_name])
        render json: document_data
-     else
+        else
+         Rails.logger.debug "==> document data: #{e.message} <=="
        render json: {errors: 'the information you provided does not match any file'}, status: 422
-     end
+    end
   end
 
   def create
     begin
+      Rails.logger.debug "==> upload document: #{params} <=="
       document = Document.new(document_params)
       bucket_name = ClientBucket.where(client_id: document_params[:client_id] , bucket_name: (document_params[:client_id] + '-lp-client-bucket')).first_or_create
       file_data = document_params['file'].open
@@ -20,13 +22,14 @@ class Api::V1::DocumentsController < ApplicationController
       document.checksum = compute_digest(file_data)
       document.generated_file_name = generat_file_name(document.original_file_name)
       if document.save
-        document_data = document.as_json(only: [:id, :checksum])
+       document_data = document.as_json(only: [:id, :checksum])
         render json: document_data
       else
         render json: document.errors
       end
     rescue Exception => e
       render json: e.message.inspect
+      Rails.logger.debug "==> error upload document: #{e.message} <=="
     end
 	end
 
