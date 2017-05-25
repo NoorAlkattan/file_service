@@ -7,7 +7,7 @@ class Api::V1::DocumentsController < ApplicationController
        document_data = document.as_json(only: [:id, :file, :original_file_name])
        render json: document_data
         else
-        Rails.logger.debug "==> error upload document: #{e.message} <=="
+         Rails.logger.debug "==> document data: #{e.message} <=="
        render json: {errors: 'the information you provided does not match any file'}, status: 422
     end
   end
