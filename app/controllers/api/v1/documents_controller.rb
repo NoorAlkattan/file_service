@@ -16,12 +16,15 @@ class Api::V1::DocumentsController < ApplicationController
     begin
       Rails.logger.debug "==> upload document: #{params} <=="
       document = Document.new(document_params)
+      mirror_document =  MirrorDocument.new(document_params)
       bucket_name = ClientBucket.where(client_id: document_params[:client_id] , bucket_name: (document_params[:client_id] + '-lp-client-bucket')).first_or_create
       file_data = document_params['file'].open
 			document.original_file_name = File.basename(document.file_url)
       document.checksum = compute_digest(file_data)
       document.generated_file_name = generat_file_name(document.original_file_name)
+      mirror_document.generated_file_name = generat_file_name(document.original_file_name)
       if document.save
+         mirror_document.save
        document_data = document.as_json(only: [:id, :checksum])
         render json: document_data
       else

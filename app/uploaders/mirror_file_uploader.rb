@@ -1,4 +1,4 @@
-class FileUploader < CarrierWave::Uploader::Base
+class MirrorFileUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
@@ -34,8 +34,9 @@ class FileUploader < CarrierWave::Uploader::Base
   #   process resize_to_fit: [50, 50]
   # end
    def fog_directory
-   'gb-project-west'
+   'gb-project-east'
    end
+
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
    def extension_whitelist
