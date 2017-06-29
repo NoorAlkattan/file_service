@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170323145557) do
+ActiveRecord::Schema.define(version: 20170627173626) do
 
   create_table "client_buckets", force: :cascade do |t|
     t.integer  "client_id"
@@ -27,6 +27,18 @@ ActiveRecord::Schema.define(version: 20170323145557) do
     t.string   "original_file_name"
     t.string   "checksum"
     t.integer  "client_id"
+    t.string   "file1"
+    t.string   "unique"
+  end
+
+  create_table "mirror_documents", force: :cascade do |t|
+    t.string   "file"
+    t.integer  "client_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "document_id"
+    t.string   "unique"
+    t.index ["file"], name: "index_mirror_documents_on_file"
   end
 
 end
